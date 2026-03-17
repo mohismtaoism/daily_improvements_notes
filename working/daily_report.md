@@ -462,7 +462,7 @@ After my diligent investigations, RTTE can use CMSIS dap burner to implement the
 # 2026.3.9
 
 1. Redesign the communication protocol between the ARM linux and the ic10.
-2. Implement the ic10 side's communication
+2. Implement the ic10 side's communication.
 
 # 2026.3.10
 
@@ -492,3 +492,8 @@ Set 50 100 150 200 250 300 350 400 450
 
 1. Debug the rfid module.
 2. Push all related source code into the git server.
+
+# 2026.3.16
+
+1. Potential changing languge issues analyzing;
+2. Calibrating widget design.
