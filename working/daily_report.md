@@ -497,3 +497,38 @@ Set 50 100 150 200 250 300 350 400 450
 
 1. Potential changing languge issues analyzing;
 2. Calibrating widget design.
+
+# 2026.3.17
+
+1. Calibrating widget design.
+2. Implement SettingElectroSurgery widget.
+
+# 2026.3.18
+
+1. Designing the whole calibrating system;
+
+# 2026.3.19
+
+## Variance matrices
+
+| Scenario | Variance of Phase |
+| --- | --- |
+| 一代+一体洪| 4708 |
+| 一代+一体自制| 1569 |
+| 一代+强生| 3126 |
+| 一代+耀辉| 4027 |
+| 一代+越安| 5070 |
+| 二代+一体洪| 5945 |
+| 二代+一自制| 4051 |
+| 二代+强生| 4334 |
+| 二代+耀辉| 4288 |
+| 二代+越安| 5395 |
+
+1. Prepare phase variance checking special softwares.
+2. Do test cases with the specail softwares.
+3. According to the blades saving feature, we will save recent 8 blades when the second detuned warning show.
+
+# 2026.3.20
+
+1. Implement the calibrating system in ic10 side.
+2. Help Liuxia to set up the new computer wokring environment.
