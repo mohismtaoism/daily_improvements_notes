@@ -532,3 +532,125 @@ Set 50 100 150 200 250 300 350 400 450
 
 1. Implement the calibrating system in ic10 side.
 2. Help Liuxia to set up the new computer wokring environment.
+
+# 2026.3.23
+
+1. Debug the recent blades data saving mechanism.
+2. Implement and design the calibrating layer in ic10.
+
+# 2026.3.24
+
+## Tasks
+1. Complete the ic10 layer;
+2. Writing an essay about Qingzhao(2);
+3. Start ad9838 project;
+
+# Actual achievements
+
+1. Complete the ic10 layer of the calibrating system;
+2. Help the manufacturing department to analyze the impedance issue of the mainframe.
+
+# 2026.3.25
+
+In IC11, ModbusTask_Marster has the state machine to recieve and send the data.
+
+rR8Code_Marster to recieve from ic10
+
+Implement the current feeddback mechanism.
+
+# 2026.3.26
+
+1. Implement ESBasicDACWidget.
+
+# 2026.3.27
+
+1. Configure staffs' NAS permissions;
+2. Implement ESBasicDACWidget.
+
+# 2026.4.1
+
+1. Current collecting routine
+	The *I* is 12 bits unsigned integer from FPGA's da chip.
+	```c
+	float cur_avg=I*2.5/4096;
+	Iprms=cur_avg/2.965;
+	```
+2. Optimizing ESBasicDACWidget;
+
+# 2026.4.2
+
+Optimizing ESBasicDACWidget;
+
+# 2026.4.3
+
+# 2026.04.08
+
+# 2026.4.13
+
+1. Do phase variance verification for 10 scapels.
+2. Pedal activating issue tracking;
+
+| Number | Variance of Phase | Result |
+| --- | --- | --- |
+| 1 | 3137 | Failed |
+| 2 | 4140 | OK |
+| 3 | 4200 | ok |
+| 4 | 4334 | ok |
+| 5 | 3134 | Failed |
+| 6 | 3399 | Failed |
+| 7 | 4417 | ok |
+| 8 | 3864 | ok |
+| 9 | 3635 | ok |
+| 10 | 3635 | ok |
+
+# 2026.4.14
+
+1. Taking part in the broken scapel analysis meeting.
+2. Pedal activating issue tracking;
+
+# 2026.4.15
+
+Pedal activating issue tracking;
+
+# 2026.04.16
+
+1. Help yifan fetch the components.
+2. Debug the whole calibrating system.
+
+## Number 1
+
+```c
+const float Current_Value [2][15] = {
+    {55,   80,   122,  140,  263,  327,  431,  511,  629,  825,  1181, 1811, 2040, 2393, 3550},  //内部计数值
+    {270, 274,   287,  296,  366,  404,  467,  517,  589,  709,  926,  1261, 1426, 1630, 2286}   //实际电流值
+};
+
+const float Impedence_Value [2][15] = {
+    {61, 88, 122, 146, 165, 178, 189, 203, 213, 221, 235, 242, 264, 283, 300},
+    {10, 25,  50,  75,  100, 125, 150, 200, 250, 300, 500, 800, 1000, 1500, 2000}
+};
+
+const float voltage_factory = 0.28;
+```
+
+## Number 2
+
+```c
+const float Current_Value [2][15] =
+{
+    {52, 98, 141, 167, 221, 265, 327, 431, 511, 628, 819, 1162, 1976, 2291,  3253},
+    {246, 250, 252, 255, 268, 289, 323, 380, 423, 489, 593, 782, 1224, 1384, 1850}
+};
+
+const float Impedence_Value [2][15] = {
+    {83, 117, 165, 200, 226, 247, 263, 288, 302, 312, 317, 318, 351,  372,  390},
+    {10, 25,  50,  75,  100, 125, 150, 200, 250, 300, 500, 800, 1000, 1500, 2000}
+};
+
+const float voltage_factory = 0.28;
+```
+
+# 2026.04.17
+
+1. Taking part in the CE file preparing meeting for energy platform.
+2. Debugging the calibrating routine;
