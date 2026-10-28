@@ -654,3 +654,467 @@ const float voltage_factory = 0.28;
 
 1. Taking part in the CE file preparing meeting for energy platform.
 2. Debugging the calibrating routine;
+
+# 2026.04.20
+
+ 1. Setting up the local integrated mainframe working envirnment.
+ 2. Debugging the rfid module(Failed).
+ 3. Debugging the ic10 calibrating module;
+ 4. Debugging the Basic DAC setting and feedback widget.
+ 5. n8n
+
+# 2026.04.21
+
+https://www.tsinghua.org.cn/info/1954/15030.htm
+https://www.tsinghua.org.cn/info/1952/17679.htm
+
+1. Implement the Electrosurgery Biomed widget;
+2. Debug the open circuit error cases;
+3. Check the differences between the old audio chip and the new one.
+
+# 2026.04.22
+
+```cpp
+QByteArray data;
+data.append(dataArray[4]);
+data.append(dataArray[5]);
+data.append(dataArray[6]);
+data.append(dataArray[7]);
+data.append(dataArray[8]);
+```
+
+```bash
+docker run -it --rm \
+ --name n8n \
+ -p 5678:5678 \
+ -e GENERIC_TIMEZONE="Asia/Shanghai" \
+ -e TZ="Asia/Shanghai" \
+ -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+ -e N8N_RUNNERS_ENABLED=true \
+ -v n8n_data:/home/node/.n8n \
+ docker.n8n.io/n8nio/n8n
+```
+
+1. The new audio chip issues analyzing;
+2. The Electro Surgery Biomed widget implementation.
+
+# 2026.04.23
+
+```bash
+export PATH=/the/file/path:$PATH
+```
+1. solve the open circuit
+
+# 2026.04.24
+
+1. Implement ESCalibratingVoltage;
+2. Verify 8 pedals' function;
+
+```bash
+sudo docker run -it --rm  --name n8n  -p 5678:5678  -e GENERIC_TIMEZONE="Asia/Shanghai"  -e TZ="Asia/Shanghai"  -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true  -e N8N_RUNNERS_ENABLED=true -e N8N_SECURE_COOKIE=false  -v n8n_data:/home/node/.n8n  docker.n8n.io/n8nio/n8n
+```
+
+# 2026.04.28
+
+1. Analyze the recent blades data saving feature;
+2. Implement ESCalibratingVoltage;
+
+# 2026.04.29
+
+1. Implement the TableNavigator class to navigate the table;
+2. Analyze the transformer failed issues.
+
+# 2026.04.30
+
+1. Complete the ESCalibratingVoltageWidget;
+2. Start to implement the impedance calibrating function.
+
+# 2026.05.07
+
+1. Implement ESCalibratingImpedanceWidget;
+2. Test the open loop error on Beijing server;
+
+#  2026.05.08
+
+1. Prepare Chinese text table to the market staff;
+2. Adding cutted voice feather.
+
+Integrated Mainframe legacy issues:
+
+1. The ligasure side should use "ElectroSurgery" in multi language.
+2. Calibrating summary widget.
+3. The two sides should both have voice control.
+
+#  2026.05.09
+
+1. Implement ESCalibratingSummaryWidget;
+2. Split calibrating data from ic11 source code.
+
+#  2026.05.10
+
+#  2026.05.11
+
+```c
+
+float calculate_impedance(uint16_t power, uint16_t current) {
+	float fAngel = 0.0;
+	float fPhaseDiff = 0.0;
+	float fRes = 0.0;
+	float fPower = 0.0;
+	float fCurrent = 0.0;
+
+	const float fangel_90 = 1.46;
+	const float fangel_0  = 2.88;
+	const float currentcoff = 2.97;
+	const float powercoff = 0.02887;
+
+	fPhaseDiff = 3.0*phase/4095;
+	fAngel = ((0 - 90.0)/(fangel_0 - fangel_90)*(fPhaseDiff - fangel_90)) + 90;
+
+	if(fabs(cos(fAngel*3.1415926/180)) < 1e-6)
+		return;
+
+	if(fabs(fCurrent) < 1e-6)
+		return;
+
+	fPower = 3.0*power/4095.0;
+	fCurrent = 3.0*current/4095.0;
+
+	fPower = fPower/powercoff;
+	fCurrent = fCurrent/currentcoff;
+
+	fRes = (fPower)/cos(fAngel*3.1415926/180);
+	fRes = fRes/(fCurrent*fCurrent);
+
+	return fRes;
+}
+
+```
+
+# 2026.05.14
+
+run1: 3799 + 1500 = 5300 short
+run1:
+run4: 2495 + 400 = 2895  short
+
+```c
+const float Current_Value [2][15] =
+{
+	{409, 420, 449, 466, 514, 585,   622,  667,  750,  804, 885, 1001,  1211, 1542, 1960},//内部计数值；
+	{57,  76,  113, 139, 217, 355,   424 , 514,  678,  783, 940,  1198,  1610, 2281, 3096} //实际电流值
+};
+```
+
+run4: 2281 + 400 = 2681
+
+# Shenzhen Number 1
+
+## Short circuit (under run4 state)
+
+impedance : 15
+current :   current+value[1][13] + 1250
+pid_number: 60
+
+## Open circuit
+
+380 --> 460 --> 600 --> 800, make sure the app can run to run4 with out printf.
+
+run1: open_current_num > 380 确保程序跑到run4
+run4: open_circuit_pid_num_limit = 57
+
+other: 62
+| Number | open circuit pid num |
+| --- | --- |
+| 1_plus | 57 |
+| sh2603105006008 | 62 |
+
+# 2026.05.19
+
+1. Implement calibrating timeout mechanism;
+
+## Task list
+
+1. calibrating timeout mechanism; Done.
+2. Disabled ligasure voices.
+3. Optimizing the calibrating ui;
+4. calibrating flashing function;
+5. Audio asset
+
+
+# 2026.05.20
+
+1. Adding electrosurgery software version function;
+
+
+# 2026.05.24
+
+ZA Bank（众安银行）、天星银行、livi Bank
+
+汇丰，再众安，最后中银
+
+# 2026.05.25
+
+| Time slot | first half | seconf half |
+| --- | --- | --- |
+|9:00 - 10:00|investgate hk bank issue| Nothing |
+|10:00 - 11:00|investgate tencent video get | google test 60% |
+|11:00 - 12:00| Google test stuffs |
+
+1. Unittest cases set up;
+2. Translate Text for mainframe;
+
+# 2026.05.27
+
+文天祥传 110 page
+
+# 2026.05.28
+
+| Time slot | first half | seconf half |
+| --- | --- | --- |
+|9:00 - 10:00|investgate hk bank issue| Nothing |
+|10:00 - 11:00|investgate tencent video get | google test 60% |
+|11:00 - 12:00| Google test stuffs |
+
+1. Setting up googletest for ultrasurgery;
+2. Write the audiotest for ultrasurgery;
+3. Try to add new audio files to integrated mainframe.
+
+# 2026.05.29
+
+1. Denugging new audio playing issues;
+2. Complete the mainframe's new audio playing feature.
+
+## side project
+
+StartAutoFollow --> Start to cut
+
+EndAutoFollow --> finish to
+
+
+# 2026.06.01
+
+1. Start to implement the qt layer of flashing calibrating data;
+2. Implement the audio chip verify cases;
+
+# 2026.06.02
+
+1. Continue with the audio chip verify cases;
+2. Continue with the qt layer of flashing calibrating data;
+
+# 2026.06.05
+
+1. Start to implement the ic10 layer of flashing calibrating data;
+2. ligasure ui coordination;
+3. Trouble shooting for the new audio chip issue.
+
+# 2026.06.08 - 2026.06.12
+
+1. Start to design the architecture of calibration manager;
+2. Complete the design the architecture of calibration manager;
+3. implement the qt layer of the calibration manager;
+4. implement the ic10 layer of the calibration manager;
+5. implement the ic11 layer of the calibration manager;
+
+# 2026.06.15
+
+1. The calibration flashing architecture design;
+
+# 2026.06.16
+
+1. Debugging the ic11 layer of calibration manager;
+2. FPGA developments refreshing;
+
+Transfer to Wen Dao: (10000 - 38)*4 = 39848
+Wen Dao Back:  16000 + 15962
+
+# 2026.06.24
+
+Go to advtech to solve the core board issues;
+
+## Yanhua trip
+
+| Board | issues |
+| --- | --- |
+|new processed| 开机log ok, 启动后字符不显示|
+|old bad|  |
+
+## 潮汕话
+
+ti 桃  --> 去玩
+阿弥陀佛 --> a mi tang hu
+
+# 2026.06.25
+
+```bash
+./ultrasurgery_tests --gtest_filter=AudioTest.chip_verify --gtest_repeat=50 2>&1 | tee audio_verify.log
+```
+
+1. Audio chip verifying;
+2. Flashing function implement, including flash ACK/NACK
+
+## New Ultrasurgery software Requirements
+
+
+发送给微控制器
+
+| File | Time |
+| --- | --- |
+|001startup.mp3| 3s |
+|002startup_bubble.mp3| 1s |
+|003max.mp3 | 10s |
+|004min.mp3 | 19s |
+|005kn_test.mp3 | 2s |
+|006ready.mp3 | 2s |
+|007poweroff.mp3 | 2s |
+|008poweroff_ding.mp3 | 2s|
+|009warning.mp3 | 2s |
+|010tip.mp3 | 1s |
+|011lick.wav | Less than 1s|
+|012finished.mp3 |Less than 1s|
+|013cut.mp3 | 9s |
+|014_es_working.mp3 | 9s |
+|015_es_ending.mp3 | Less than 1s |
+|016_es_warning.mp3 | 几乎一秒 |
+
+# 2026.07.01
+
+1. Flashing system;
+2. Audio check;
+
+# 2026.07.02
+
+
+eb 90 85 09 50 57 45 53 30 30 30 31 00 44 36
+
+# 2026.07.12
+
+## 鲲鹏径第三段
+
+起点：大井山警务工作室
+终点：深圳市长龙书院
+
+## 鲲鹏径第四段
+
+起点：大井山警务工作室
+终点：深圳市长龙书院
+
+# 2026.07.13
+
+## prompt for kernel
+
+请您扫描整个目录
+
+source目录下有uboot和linux kernel
+
+# 2026.07.16
+
+## one wired dev
+
+ source\linux-3.2.0-psp04.06.00.11\drivers\w1\slaves\w1_gxe00.c
+
+ ```
+[    1.195565] Set the master secret in the Software SHA-256
+[    1.201222]  w1_ds28e25_read_status(
+[    1.224787] result : 0
+[    1.227257] Read-Authenticate with unique secret
+[    1.412118] result : 0
+[    1.414588] DS28E25 Setup Example: SUCCESS
+[    1.418879] --------------------------------------------------
+[    1.425002] w1_ds28e25_setup_device success
+[    1.632093] w1_ds28e25_verifymac result : 0
+[    1.636477] w1_ds28e25_add_slave end, skip_setup=1, err=0
+ ```
+
+# 2026.07.20
+
+```bash
+git submodule add https://codeup.aliyun.com/657ffdee7f217c9ca94d71c8/purwell/ultrasurgery source
+```
+
+# 2026.07.27
+
+| Desc | Contact | pri |
+| --- | --- | --- |
+| 后入易高潮少妇 | 1214178295，920198374 |
+| 主动丰满型小妞儿| 1844681938 | 600 |
+| 大奶长腿极骚妹子 |wang1237690 zz113118cy 2433193982 | 800 |
+| 白皙结实的嫩妹 | 599801540 | 800 |
+
+
+| ppm | name |
+| --- | --- |
+| logo_linux_clut224_black.ppm | black |
+| logo_linux_clut224_purwell.ppm | purwell |
+| logo_linux_clut224_mesic.ppm | mesic |
+| logo_linux_clut224_lepuyiliao-poweron.ppm | lepu |
+| | ledong |
+| | lcm |
+| | bcm |
+
+Procision 1000 超声能量平台基于TI的ARM Cortex-A8处理器与Intel的cyclone IV FPGA的双芯配置，兼具强大的智能计算能力，和高速实时数据采集，以及精准的基于AI的反馈能量控制。软件界面灵活多变，自由度高，国际化轻松定制，提供了完美的扩展性与丝滑的用户体验。
+
+
+# 2026.08.10
+
+| Number | Language |
+| --- | --- |
+| 1 | 中文 |
+| 2 | 德语 |
+| 3 | 英语 |
+| 4 | 西班牙语 |
+| 5 | 法语 |
+| 6 |  意大利语 |
+| 7 | 葡萄牙语 |
+| 8 | 俄罗斯语 |
+
+
+
+
+send cmd: "7e 03 0e 0d ef" | stop
+send cmd: "7e 05 41 00 08 4c ef" | play 0008 file
+send cmd: "7e 04 33 02 35 ef   | loop mode
+
+
+01-00:02:21.468 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 03 0e 0d ef"
+01-00:02:21.529 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 05 41 00 08 4c ef"
+01-00:02:21.590 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 04 33 02 35 ef"
+01-00:02:22.467 [Critical]:[TraceFreq::setParam:677]  set current: 420
+01-00:02:22.551 [Critical]:[TraceFreq::setParam:677]  set current: 400
+01-00:02:22.635 [Critical]:[TraceFreq::setParam:677]  set current: 380
+01-00:02:23.274 [Warning]:[TraceFreq::run:553]  time:5820 frequency:55195.54,Iprms:0.28,Vprms:23.59,phase:-21.73, Ravg:85.33, Pavg:6.06, Rins:70.34
+01-00:02:23.291 [Warning]:[TraceFreq::run:553]  time:5838 frequency:55197.00,Iprms:0.28,Vprms:21.91,phase:-32.08, Ravg:79.09, Pavg:5.14, Rins:65.19
+01-00:02:23.300 [Warning]:[TraceFreq::run:553]  time:5846 frequency:55198.50,Iprms:0.28,Vprms:17.57,phase:-45.86, Ravg:63.62, Pavg:3.38, Rins:52.44
+01-00:02:23.307 [Warning]:[TraceFreq::run:553]  time:5855 frequency:55200.87,Iprms:0.28,Vprms:15.46,phase:-52.72, Ravg:55.80, Pavg:2.59, Rins:45.99
+01-00:02:23.316 [Warning]:[TraceFreq::run:553]  time:5863 frequency:55203.67,Iprms:0.28,Vprms:14.91,phase:-49.65, Ravg:53.98, Pavg:2.67, Rins:44.50
+01-00:02:23.324 [Warning]:[TraceFreq::run:553]  time:5872 frequency:55206.27,Iprms:0.28,Vprms:14.44,phase:-40.72, Ravg:52.15, Pavg:3.03, Rins:42.99
+01-00:02:23.341 [Warning]:[TraceFreq::run:553]  time:5889 frequency:55208.02,Iprms:0.28,Vprms:14.33,phase:-25.29, Ravg:51.60, Pavg:3.60, Rins:42.53
+01-00:02:23.358 [Warning]:[TraceFreq::run:553]  time:5905 frequency:55208.03,Iprms:0.28,Vprms:14.11,phase:-36.64, Ravg:50.85, Pavg:3.14, Rins:41.92
+01-00:02:23.361 [Warning]:[KeyInput::onKeyEvent:258]  isPressed : true , press : false
+01-00:02:23.362 [Warning]:[KeyInput::onKeyEvent:275]  "button16 release"
+01-00:02:23.363 [Warning]:[MainController::changeStatus:139]  status changed from ActivateMax to Idle
+01-00:02:23.366 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 03 0e 0d ef"
+01-00:02:23.384 [Warning]:[TraceFreq::run:616]  Resistance interval = [41.9154, 276.31]
+01-00:02:23.386 [Warning]:[TraceFreq::run:617]  last_activate_time =125783
+01-00:02:23.386 [Warning]:[TraceFreq::run:618]  cutting consumed=5905 ms
+01-00:02:23.387 [Critical]:[TraceFreq::setParam:677]  set current: 355
+01-00:02:23.388 [Critical]:[TraceFreq::setParam:677]  set current: 330
+01-00:02:23.389 [Critical]:[TraceFreq::setParam:677]  set current: 305
+01-00:02:23.390 [Critical]:[TraceFreq::setParam:677]  set current: 280
+01-00:02:23.391 [Critical]:[TraceFreq::setParam:677]  set current: 255
+01-00:02:23.392 [Critical]:[TraceFreq::setParam:677]  set current: 230
+01-00:02:23.393 [Critical]:[TraceFreq::setParam:677]  set current: 205
+01-00:02:23.394 [Critical]:[TraceFreq::setParam:677]  set current: 180
+01-00:02:23.395 [Critical]:[TraceFreq::setParam:677]  set current: 155
+01-00:02:23.396 [Critical]:[TraceFreq::setParam:677]  set current: 130
+01-00:02:23.397 [Critical]:[TraceFreq::setParam:677]  set current: 105
+01-00:02:23.399 [Critical]:[TraceFreq::setParam:677]  set current: 80
+01-00:02:23.404 [Critical]:[TraceFreq::setParam:677]  set current: 55
+01-00:02:23.405 [Critical]:[TraceFreq::setParam:677]  set current: 30
+01-00:02:23.406 [Critical]:[TraceFreq::setParam:677]  set current: 5
+01-00:02:23.407 [Critical]:[TraceFreq::setParam:677]  set current: 1
+01-00:02:23.427 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 03 0e 0d ef"
+01-00:02:23.709 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 03 0e 0d ef"
+01-00:02:26.561 [Warning]:[MainController::changeStatus:139]  status changed from Idle to HandleOff
+01-00:02:26.594 [Warning]:[Container::push:186]  push widget:  HandleOffWidget(0x35dea8, name = "HandleOffWidget")
+01-00:02:26.595 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 05 41 00 0a 4e ef"
+01-00:02:26.656 [Warning]:[ActualAudio::run:74]  AudioThread send cmd: "7e 04 33 04 33 ef"
